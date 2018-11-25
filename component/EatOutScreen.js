@@ -1,13 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image, ScrollView, TouchableHighlight } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { AppRegistry, TextInput } from 'react-native';
+const Permissions = require('react-native-permissions').default
 
 export default class App extends React.Component {
-	constructor(props) {
-	  super(props);
+	constructor() {
+	  super();
 	  this.state = { 
 	    text: '',
+	    places:[],
+	    locationPermission: 'unknown',
+            position: 'unknown',
+            latitude: 'unknown',
+            longitude: 'unknown'
 	  };
 	}
 
@@ -23,6 +29,44 @@ export default class App extends React.Component {
 	    headerTintColor: '#f95959'
 	}
 
+	    _requestPermission(){
+        console.log(Permissions);
+    }
+
+          fetchToDos(lat,long) {
+    fetch(`https://developers.zomato.com/api/v2.1/geocode?lat=${lat}&lon=${long}&apikey=f8fd515e2cdc8ed43c71864677bc2e2c`)
+    .then((response) => response.json())
+    .then((response) => {
+        let nameArray = [];
+        for (var i = 0; i < response.nearby_restaurants.length; i++){
+            nameArray.push(response.nearby_restaurants[i]);
+        }
+        this.setState({
+            places: nameArray,
+        })
+    })
+}
+
+    componentDidMount(){
+        console.log('Start');
+        this._requestPermission();
+        console.log('Check position');
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position.coords);
+            console.log('My position: ' + position.coords.latitude + ', ' + position.coords.longitude)
+            let coordinates = position.coords.latitude + ', ' + position.coords.longitude;
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            this.setState({
+                position: coordinates,
+                latitude: latitude,
+                longitude: longitude
+            })
+            this.fetchToDos(latitude,longitude);
+        }, 
+            (error) => alert(JSON.stringify(error)));
+    }
+
 	submitAndClear = () => {
 	    this.props.writeText(this.state.text)
 	    this.setState({
@@ -37,33 +81,29 @@ export default class App extends React.Component {
 	render() {
 	    return (
 	      <View style={styles.container}>
-	        <View style={styles.inputContainer}>
-	          <TextInput placeholder="Type here to search restaurants nearby!"
-		          placeholderTextColor="gray" clearButtonMode='always'
-		          onChangeText={(text) => this.setState({text})}
-		          style={styles.search}
-		          value={this.state.text}/>
-
-		      <TouchableOpacity onPress={()=>this.submitAndClear}
-	          	style={styles.searchButt}>
-	            <Text style={styles.buttText}>Search</Text>
-	          </TouchableOpacity>
-
-	          <View style={styles.resultDiv}>
-	            <Text style={styles.text}>
-	              {'Results for: ' + this.state.text.split(',').map((word) => word).join(', ')}
-	            </Text>
+                <FlatList
+                data={this.state.places}
+                scrollEnabled={true}
+                keyExtractor={(x, i) => i.toString()}
+                renderItem={({item}) =>
+                <View style={styles.resultBlock}>
+                                    <Image source={{uri: item.restaurant.thumb}}
+                                    style={styles.resultImage}/>
+                                    <View style={styles.resultTextContainer}>
+                                        <Text style={styles.Title}>{item.restaurant.name}</Text>
+                                        <Text style={styles.resultText}>{item.restaurant.address}</Text>
+                                        <Text style={styles.resultText}>{item.restaurant.cuisines}</Text>
+                                        <Text style={styles.resultText}>{item.restaurant.user_rating.aggregate_rating} price_range</Text>
+                                    </View>
+                </View>}
+                />
 	          </View>
-
-	        </View>	 
-	      </View>
 	    );
 	  }
 	}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -75,10 +115,9 @@ const styles = StyleSheet.create({
   },
   resultDiv:{
     backgroundColor:'lightgray',
-    height:'90%',
-    bottom:0,
     width:342,
-    position:'absolute'
+    position:'absolute',
+    flex:1,
   },
   searchButt:{
   	bottom:10,
@@ -102,9 +141,102 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     color:'white',
     fontSize:15,
-    fontFamily:'sans-serif-light',
   },
   text: {
     fontSize: 15,
-  }
+  },
+  inputContainer:{    
+    margin:5,
+    width: '95%',
+    flex:1,
+    flexDirection:'row',
+    justifyContent: 'center',
+},
+searchContainer: {
+    width: '100%',
+    height: 50,
+    flexDirection:'row',
+    alignItems: 'center',
+},
+filterContainer: {
+    width: '100%',
+    height: 40,
+    flexDirection:'row',
+    alignItems: 'center',
+    position:'absolute',
+    top:50
+},
+resultDiv:{
+    height:'auto',
+    width:'100%',
+    position:'absolute',
+    flexDirection:'column',
+    top:95,
+},
+searchButt:{
+    position: 'absolute',
+    backgroundColor: '#233142',
+    height:40,
+    width:'20%',
+    justifyContent: 'center',
+    borderRadius:8,
+    right:0
+},
+search: {
+    height: 40, 
+    width:'77%',
+    borderColor: '#233142',
+    borderWidth: 2,
+    padding:5,
+    borderRadius:8,
+    color:'#f95959',
+    left:0
+},
+filter: {
+    height: 30, 
+    width:'auto',
+    borderColor: '#233142',
+    borderWidth: 2,
+    borderRadius:15,
+    color:'#f95959',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft:15, paddingRight:15, 
+    margin: 5,
+},
+buttText:{
+    alignSelf:'center',
+    color:'white',
+    fontSize:15,
+    fontFamily:'sans-serif-light',
+},
+resultBlock: {
+    width:'100%',
+    height: 160,
+    backgroundColor: '#ea9085',
+    borderRadius: 8,
+    elevation: 3,
+    padding: 15,
+    flexDirection:'row',
+    marginBottom: 10
+},
+resultImage: {
+    width:'35%',
+    height: 125,
+    backgroundColor: '#fa2',
+    marginRight: 15,
+},
+resultTextContainer: {
+    width: '60%',
+
+},
+Title:{
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold'
+},
+resultText : {
+    color: 'white',
+    fontSize: 15,
+}
 });
