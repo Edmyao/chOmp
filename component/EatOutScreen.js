@@ -86,6 +86,7 @@ export default class App extends React.Component {
                 scrollEnabled={true}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
+                <TouchableOpacity onPress={() => console.log('yes')}>
                 <View style={styles.resultBlock}>
                                     <Image source={{uri: item.restaurant.thumb}}
                                     style={styles.resultImage}/>
@@ -95,9 +96,10 @@ export default class App extends React.Component {
                                         <Text style={styles.resultText}>{item.restaurant.cuisines}</Text>
                                         <Text style={styles.resultText}>{item.restaurant.user_rating.aggregate_rating} price_range</Text>
                                     </View>
-                </View>}
+                </View>
+                </TouchableOpacity>}
                 />
-	          </View>
+	       </View>
 	    );
 	  }
 	}

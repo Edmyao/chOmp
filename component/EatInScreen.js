@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { AppRegistry, TextInput } from 'react-native';
 
@@ -8,8 +8,24 @@ export default class App extends React.Component {
     super(props);
     this.state = { 
       text: '',
+      retrievedrecipes: [],
     };
   }
+
+  fetchToDos(searchedfood) {
+    fetch(`https://api.edamam.com/search?q=${searchedfood}&app_id=0f001ce6&app_key=0a4bd5307c6118f918603e4bb13629f9&from=0&to=9`)
+    .then((response) => response.json())
+    .then((response) => {
+        let recipeArray = [];
+        for (var i = 0; i < response.hits.length; i++){
+            recipeArray.push(response.hits[i].recipe);
+        }
+        this.setState({
+            retrievedrecipes: recipeArray
+        })
+        console.log('RECIPES: ' + recipeArray[3].label);
+    })
+}
 
   static navigationOptions = {
     title: "c h O m p !",
@@ -42,16 +58,24 @@ export default class App extends React.Component {
             style={styles.search}
             value={this.state.text}/>
 
-          <TouchableOpacity onPress={()=>this.submitAndClear}
+          <TouchableOpacity onPress={()=>this.fetchToDos(this.state.text)}
             style={styles.searchButt} activeOpacity={0.4} >
             <Text style={styles.buttText}>Search</Text>
           </TouchableOpacity>
 
 
           <View style={styles.resultDiv}>
-            <Text style={styles.text}>
-              {'Results for: '+ this.state.text.split(',').map((word) => word).join(', ')}
-            </Text>
+                <FlatList
+                data={this.state.retrievedrecipes}
+                keyExtractor={(x, i) => i.toString()}
+                renderItem={({item}) =>
+                <View style={styles.resultBlock}>
+                    <Image source={{uri: item.image}} style={styles.image}/>
+                            <View>
+                                <Text>{item.label}</Text>
+                            </View>
+                </View>}
+                />
           </View>
 
         </View>
@@ -66,6 +90,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fef4e8',
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  image:{
+    height:100,
+    width:100,
   },
   inputContainer:{
     margin:5,
@@ -106,7 +134,6 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     color:'white',
     fontSize:15,
-    fontFamily:'sans-serif-light',
   },
   text: {
     fontSize: 15,
