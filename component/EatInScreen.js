@@ -69,12 +69,15 @@ export default class App extends React.Component {
                 data={this.state.retrievedrecipes}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
+                <TouchableOpacity onPress={() => console.log('yes')}>
                 <View style={styles.resultBlock}>
-                    <Image source={{uri: item.image}} style={styles.image}/>
-                            <View>
-                                <Text>{item.label}</Text>
-                            </View>
-                </View>}
+                                    <Image source={{uri: item.image}}
+                                    style={styles.resultImage}/>
+                                    <View style={styles.resultTextContainer}>
+                                        <Text style={styles.Title}>{item.label}</Text>
+                                    </View>
+                </View>
+                </TouchableOpacity>}
                 />
           </View>
 
@@ -102,7 +105,6 @@ const styles = StyleSheet.create({
   },
   resultDiv:{
     backgroundColor:'lightgray',
-    opacity:0.5,
     height:'90%',
     bottom:0,
     width:342,
@@ -137,6 +139,30 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-  }
+  },
+  resultBlock: {
+    width:'100%',
+    height: 150,
+    backgroundColor: '#ea9085',
+    borderRadius: 8,
+    elevation: 3,
+    padding: 15,
+    flexDirection:'row',
+    marginBottom: 10
+},
+resultImage: {
+    width:'35%',
+    height: 125,
+    backgroundColor: '#fa2',
+    marginRight: 15,
+},
+resultTextContainer: {
+    width: '60%',
+},
+Title:{
+    color: 'white',
+    fontSize: 22,
+    fontWeight: 'bold'
+}
 
 });
