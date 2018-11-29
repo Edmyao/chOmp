@@ -7,7 +7,7 @@ const Permissions = require('react-native-permissions').default
 export default class App extends React.Component {
 	constructor() {
 	  super();
-	  this.state = { 
+	  this.state = {
 	    text: '',
 	    places:[],
 	    locationPermission: 'unknown',
@@ -18,7 +18,7 @@ export default class App extends React.Component {
 	}
 
 	static navigationOptions = {
-	    title: "c h O m p !",
+	    title: "Let's go somewhere nearby!",
 	    headerStyle: {
 	      backgroundColor:'#233142',
 	    },
@@ -33,7 +33,7 @@ export default class App extends React.Component {
         console.log(Permissions);
     }
 
-          fetchToDos(lat,long) {
+    fetchToDos(lat,long) {
     fetch(`https://developers.zomato.com/api/v2.1/geocode?lat=${lat}&lon=${long}&apikey=f8fd515e2cdc8ed43c71864677bc2e2c`)
     .then((response) => response.json())
     .then((response) => {
@@ -63,7 +63,7 @@ export default class App extends React.Component {
                 longitude: longitude
             })
             this.fetchToDos(latitude,longitude);
-        }, 
+        },
             (error) => alert(JSON.stringify(error)));
     }
 
@@ -86,7 +86,7 @@ export default class App extends React.Component {
                 scrollEnabled={true}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
-                <TouchableOpacity onPress={() => console.log('yes')}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Map')}>
                 <View style={styles.resultBlock}>
                                     <Image source={{uri: item.restaurant.thumb}}
                                     style={styles.resultImage}/>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     borderRadius:8,
   },
   search: {
-    height: 40, 
+    height: 40,
     width:275,
     borderColor: '#233142',
     borderWidth: 2,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
   },
-  inputContainer:{    
+  inputContainer:{
     margin:5,
     width: '95%',
     flex:1,
@@ -185,7 +185,7 @@ searchButt:{
     right:0
 },
 search: {
-    height: 40, 
+    height: 40,
     width:'77%',
     borderColor: '#233142',
     borderWidth: 2,
@@ -195,7 +195,7 @@ search: {
     left:0
 },
 filter: {
-    height: 30, 
+    height: 30,
     width:'auto',
     borderColor: '#233142',
     borderWidth: 2,
@@ -203,7 +203,7 @@ filter: {
     color:'#f95959',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft:15, paddingRight:15, 
+    paddingLeft:15, paddingRight:15,
     margin: 5,
 },
 buttText:{

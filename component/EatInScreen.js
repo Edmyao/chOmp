@@ -6,7 +6,7 @@ import { AppRegistry, TextInput } from 'react-native';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       text: '',
       retrievedrecipes: [],
     };
@@ -28,7 +28,7 @@ export default class App extends React.Component {
 }
 
   static navigationOptions = {
-    title: "c h O m p !",
+    title: "Let's cook!",
     headerStyle: {
       // backgroundColor:'#9DC882',
       backgroundColor:'#233142',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   search: {
-    height: 40, 
+    height: 40,
     width:270,
     // borderColor: '#9DC882',
     borderColor:'#233142',
