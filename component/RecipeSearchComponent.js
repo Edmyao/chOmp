@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, Button, Alert, Image, StyleSheet, FlatList } from 'react-native';
+import { Text, View, Button, Alert, Image, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
 
 export default class RecipeSearchComponent extends Component {
 
@@ -13,47 +13,54 @@ export default class RecipeSearchComponent extends Component {
         };
     }
 
-fetchToDos(searchedfood) {
-    fetch(`https://api.edamam.com/search?q=${searchedfood}&app_id=0f001ce6&app_key=0a4bd5307c6118f918603e4bb13629f9&from=0&to=9`)
-    .then((response) => response.json())
-    .then((response) => {
-        let recipeArray = [];
-        for (var i = 0; i < response.hits.length; i++){
-            recipeArray.push(response.hits[i].recipe);
-        }
-        this.setState({
-            retrievedrecipes: recipeArray
+    fetchToDos(searchedfood) {
+        fetch(`https://api.edamam.com/search?q=${searchedfood}&app_id=0f001ce6&app_key=0a4bd5307c6118f918603e4bb13629f9&from=0&to=9`)
+        .then((response) => response.json())
+        .then((response) => {
+            let recipeArray = [];
+            for (var i = 0; i < response.hits.length; i++){
+                recipeArray.push(response.hits[i].recipe);
+            }
+            this.setState({
+                retrievedrecipes: recipeArray
+            })
+            console.log('RECIPES: ' + recipeArray[3].label);
         })
-        console.log('RECIPES: ' + recipeArray[3].label);
-    })
-}
+    }
 
-componentDidMount(){
-    this.fetchToDos(this.state.searchitem);
-}
+    componentDidMount(){
+        this.fetchToDos(this.state.searchitem);
+    }
+
+    loadImage(thing){
+        this.setState({
+            imageURL: 'https://i.pinimg.com/originals/f5/7e/00/f57e00306f3183cc39fa919fec41418b.jpg',
+        });
+    }
 
     render() {
         return (
-            
             <View style={styles.container}>
                 <Text style={styles.header}>I'M HUNGRY</Text>
                 <FlatList
                 data={this.state.retrievedrecipes}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
-                <View style={styles.resultBlock}>
-                    <Image source={{uri: item.image}} style={styles.image}/>
-                            <View>
-                                <Text>{item.label}</Text>
-                            </View>
-                </View>}
+                    <TouchableOpacity  onPress={() => {
+                    this.loadImage(task);}}> 
+                        <View style={styles.resultBlock}>
+                            <Image source={{uri: item.image}} style={styles.image}/>
+                                <View>
+                                    <Text>{item.label}</Text>
+                                </View>
+                        </View>
+                    </TouchableOpacity>}
                 />
-
             </View>
-        )
-    }
+        )}
 }
-    const styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -67,4 +74,4 @@ componentDidMount(){
         height: 100,
         width: 100
     }
-    });
+});

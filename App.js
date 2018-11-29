@@ -23,11 +23,12 @@ const RootStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'EatIn',
   }
 );
 
 export default class App extends React.Component {
+	
   render() {
     return <RootStack/>;
   }

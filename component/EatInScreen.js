@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { AppRegistry, TextInput } from 'react-native';
+import { AppRegistry, TextInput, Modal, BlurView } from 'react-native';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -9,6 +9,8 @@ export default class App extends React.Component {
     this.state = {
       text: '',
       retrievedrecipes: [],
+      showModal: false,
+      recipeDescription: '',
     };
   }
 
@@ -48,6 +50,12 @@ export default class App extends React.Component {
     })
   }
 
+  changeVisibility(visibility) {
+      this.setState({
+          showModal: visibility,
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -65,11 +73,12 @@ export default class App extends React.Component {
 
 
           <View style={styles.resultDiv}>
-                <FlatList
+
+               <FlatList
                 data={this.state.retrievedrecipes}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
-                <TouchableOpacity onPress={() => console.log('yes')}>
+                <TouchableOpacity onPress={() => this.changeVisibility(true)}>
                 <View style={styles.resultBlock}>
                                     <Image source={{uri: item.image}}
                                     style={styles.resultImage}/>
@@ -82,6 +91,27 @@ export default class App extends React.Component {
                 </TouchableOpacity>}
                 />
           </View>
+
+
+          <Modal visible={this.state.showModal} animationType="fade" transparent={true}
+              onRequestClose={()=>console.warn("this is a close request")}>
+              
+              <View style={styles.modalView}>
+                <View>
+                  <Text> HELLO WORLD </Text>
+                  <Text> Put recipe stuff here </Text>
+                </View>
+
+                <View>
+                  <TouchableOpacity onPress={()=>{
+                      this.changeVisibility(false);
+                  }}>
+                      <Text style={styles.closeButt}> CLOSE </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              
+          </Modal> 
 
         </View>
       </View>
@@ -169,6 +199,21 @@ Title:{
 resultText : {
     color: 'white',
     fontSize: 15,
-}
-
+},
+modalView:{
+      flex: 1,
+      justifyContent: 'center', 
+      alignItems: 'center',
+      backgroundColor:'lightblue',
+  },
+closeButt:{
+      alignSelf: 'center',
+      textAlign: 'center',
+      borderColor: '#8E8E8E',
+      borderWidth: StyleSheet.hairlineWidth,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 5,
+      backgroundColor:'#DCDCDC'
+  },
 });
