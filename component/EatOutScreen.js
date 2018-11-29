@@ -105,140 +105,139 @@ export default class App extends React.Component {
 	}
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  inputContainer:{
-    margin:5,
-    flex:1,
-    flexDirection:'row'
-  },
-  resultDiv:{
-    backgroundColor:'lightgray',
-    width:342,
-    position:'absolute',
-    flex:1,
-  },
-  searchButt:{
-  	bottom:10,
-    margin:10,
-    backgroundColor: '#233142',
-    height:40,
-    width:'15%',
-    justifyContent: 'center',
-    borderRadius:8,
-  },
-  search: {
-    height: 40,
-    width:275,
-    borderColor: '#233142',
-    borderWidth: 2,
-    borderRadius:8,
-    padding:10,
-    color:'#f95959',
-  },
-  buttText:{
-    alignSelf:'center',
-    color:'white',
-    fontSize:15,
-  },
-  text: {
-    fontSize: 15,
-  },
-  inputContainer:{
-    margin:5,
-    width: '95%',
-    flex:1,
-    flexDirection:'row',
-    justifyContent: 'center',
-},
-searchContainer: {
-    width: '100%',
-    height: 50,
-    flexDirection:'row',
-    alignItems: 'center',
-},
-filterContainer: {
-    width: '100%',
-    height: 40,
-    flexDirection:'row',
-    alignItems: 'center',
-    position:'absolute',
-    top:50
-},
-resultDiv:{
-    height:'auto',
-    width:'100%',
-    position:'absolute',
-    flexDirection:'column',
-    top:95,
-},
-searchButt:{
-    position: 'absolute',
-    backgroundColor: '#233142',
-    height:40,
-    width:'20%',
-    justifyContent: 'center',
-    borderRadius:8,
-    right:0
-},
-search: {
-    height: 40,
-    width:'77%',
-    borderColor: '#233142',
-    borderWidth: 2,
-    padding:5,
-    borderRadius:8,
-    color:'#f95959',
-    left:0
-},
-filter: {
-    height: 30,
-    width:'auto',
-    borderColor: '#233142',
-    borderWidth: 2,
-    borderRadius:15,
-    color:'#f95959',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft:15, paddingRight:15,
-    margin: 5,
-},
-buttText:{
-    alignSelf:'center',
-    color:'white',
-    fontSize:15,
-    fontFamily:'sans-serif-light',
-},
-resultBlock: {
-    width:'100%',
-    height: 160,
-    backgroundColor: '#ea9085',
-    borderRadius: 8,
-    elevation: 3,
-    padding: 15,
-    flexDirection:'row',
-    marginBottom: 10
-},
-resultImage: {
-    width:'35%',
-    height: 125,
-    backgroundColor: '#fa2',
-    marginRight: 15,
-},
-resultTextContainer: {
-    width: '60%',
-
-},
-Title:{
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 'bold'
-},
-resultText : {
-    color: 'white',
-    fontSize: 15,
-}
+    container: {
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    inputContainer:{
+        margin:5,
+        flex:1,
+        flexDirection:'row'
+    },
+    resultDiv:{
+        backgroundColor:'lightgray',
+        width:342,
+        position:'absolute',
+        flex:1,
+    },
+    searchButt:{
+      	bottom:10,
+        margin:10,
+        backgroundColor: '#233142',
+        height:40,
+        width:'15%',
+        justifyContent: 'center',
+        borderRadius:8,
+    },
+    search: {
+        height: 40,
+        width:275,
+        borderColor: '#233142',
+        borderWidth: 2,
+        borderRadius:8,
+        padding:10,
+        color:'#f95959',
+    },
+    buttText:{
+        alignSelf:'center',
+        color:'white',
+        fontSize:15,
+    },
+    text: {
+        fontSize: 15,
+    },
+    inputContainer:{
+        margin:5,
+        width: '95%',
+        flex:1,
+        flexDirection:'row',
+        justifyContent: 'center',
+    },
+    searchContainer: {
+        width: '100%',
+        height: 50,
+        flexDirection:'row',
+        alignItems: 'center',
+    },
+    filterContainer: {
+        width: '100%',
+        height: 40,
+        flexDirection:'row',
+        alignItems: 'center',
+        position:'absolute',
+        top:50
+    },
+    resultDiv:{
+        height:'auto',
+        width:'100%',
+        position:'absolute',
+        flexDirection:'column',
+        top:95,
+    },
+    searchButt:{
+        position: 'absolute',
+        backgroundColor: '#233142',
+        height:40,
+        width:'20%',
+        justifyContent: 'center',
+        borderRadius:8,
+        right:0
+    },
+    search: {
+        height: 40,
+        width:'77%',
+        borderColor: '#233142',
+        borderWidth: 2,
+        padding:5,
+        borderRadius:8,
+        color:'#f95959',
+        left:0
+    },
+    filter: {
+        height: 30,
+        width:'auto',
+        borderColor: '#233142',
+        borderWidth: 2,
+        borderRadius:15,
+        color:'#f95959',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingLeft:15, paddingRight:15,
+        margin: 5,
+    },
+    buttText:{
+        alignSelf:'center',
+        color:'white',
+        fontSize:15,
+        fontFamily:'sans-serif-light',
+    },
+    resultBlock: {
+        width:'100%',
+        height: 160,
+        backgroundColor: '#ea9085',
+        borderRadius: 8,
+        elevation: 3,
+        padding: 15,
+        flexDirection:'row',
+        marginBottom: 10
+    },
+    resultImage: {
+        width:'35%',
+        height: 125,
+        backgroundColor: '#fa2',
+        marginRight: 15,
+    },
+    resultTextContainer: {
+        width: '60%',
+    },
+    Title:{
+        color: 'white',
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+    resultText : {
+        color: 'white',
+        fontSize: 15,
+    }
 });

@@ -20,7 +20,7 @@ const RootStack = createStackNavigator(
     },
     Map: {
       screen: MapScreen,
-    }
+    },
   },
   {
     initialRouteName: 'Home',
