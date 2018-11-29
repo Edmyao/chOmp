@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     color:'#900d0d',
     fontSize:15,
-    fontFamily:'sans-serif-medium',
   },
   img:{
     height:155,
