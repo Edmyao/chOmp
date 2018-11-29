@@ -75,6 +75,8 @@ export default class App extends React.Component {
                                     style={styles.resultImage}/>
                                     <View style={styles.resultTextContainer}>
                                         <Text style={styles.Title}>{item.label}</Text>
+                                        <Text style={styles.resultText}>{item.healthLabels[0]}</Text>
+                                        <Text style={styles.resultText}>Calories: {item.calories.toFixed()}</Text>
                                     </View>
                 </View>
                 </TouchableOpacity>}
@@ -163,6 +165,10 @@ Title:{
     color: 'white',
     fontSize: 22,
     fontWeight: 'bold'
+},
+resultText : {
+    color: 'white',
+    fontSize: 15,
 }
 
 });

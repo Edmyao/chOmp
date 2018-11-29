@@ -92,9 +92,9 @@ export default class App extends React.Component {
                                     style={styles.resultImage}/>
                                     <View style={styles.resultTextContainer}>
                                         <Text style={styles.Title}>{item.restaurant.name}</Text>
-                                        <Text style={styles.resultText}>{item.restaurant.address}</Text>
+                                        <Text style={styles.resultText}>{item.restaurant.location.address}</Text>
+                                        <Text style={styles.resultText}>Rating: {item.restaurant.user_rating.aggregate_rating}/5</Text>
                                         <Text style={styles.resultText}>{item.restaurant.cuisines}</Text>
-                                        <Text style={styles.resultText}>{item.restaurant.user_rating.aggregate_rating} price_range</Text>
                                     </View>
                 </View>
                 </TouchableOpacity>}
