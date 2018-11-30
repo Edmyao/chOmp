@@ -28,7 +28,7 @@ const RootStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'EatIn',
+    initialRouteName: 'Home',
   }
 );
 
