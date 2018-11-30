@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import Permissions from 'react-native-permissions';
 import MapView, { Circle, Marker } from 'react-native-maps';
 
@@ -87,7 +87,8 @@ export default class GPSComponent extends Component {
                 style={styles.map}
                 >
                 </MapView>
-                <View style={styles.resultBlock}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Reviews')}
+                    style={styles.resultBlock}>
                     <View style={styles.resultTextContainer}>
                         <Text style={styles.Title}>RESTAURANT NAME</Text>
                         <Text style={styles.resultText}>ADDRESS</Text>
@@ -96,7 +97,7 @@ export default class GPSComponent extends Component {
                     </View>
                     <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
                     style={styles.resultImage}/>
-                </View>
+                </TouchableOpacity>
             </View>
 
         )
