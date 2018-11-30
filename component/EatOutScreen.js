@@ -86,7 +86,16 @@ export default class App extends React.Component {
                 scrollEnabled={true}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Map')}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
+                    restId:item.restaurant.R.res_id,
+                    restLat:item.restaurant.location.latitude,
+                    restLong:item.restaurant.location.longitude,
+                    restname:item.restaurant.name,
+                    restaddress:item.restaurant.location.address,
+                    restrating:item.restaurant.user_rating.aggregate_rating,
+                    restcuisine:item.restaurant.cuisines,
+                    restimage:item.restaurant.thumb,
+                })}>
                 <View style={styles.resultBlock}>
                         <Image source={{uri: item.restaurant.thumb}}
                         style={styles.resultImage}/>

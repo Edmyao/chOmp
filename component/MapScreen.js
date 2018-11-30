@@ -22,18 +22,18 @@ export default class GPSComponent extends Component {
     },
   }
 
-    constructor() {
-        super();
-        this.state = {
-            region: {
-                latitude: 50.60254331180157,
-                latitudeDelta: 0.2729186541296684,
-                longitude: 16.721875704824924,
-                longitudeDelta: 0.26148553937673924,
-            },
-        };
-        this.onRegionChange = this.onRegionChange.bind(this);
-    }
+    // constructor() {
+    //     super();
+    //     this.state = {
+    //         // region: {
+    //         //     latitude: 50.60254331180157,
+    //         //     latitudeDelta: 0.2729186541296684,
+    //         //     longitude: 16.721875704824924,
+    //         //     longitudeDelta: 0.26148553937673924,
+    //         // },
+    //     };
+    //     this.onRegionChange = this.onRegionChange.bind(this);
+    // }
 
     _requestPermission() {
         Permissions.request('location')
@@ -78,24 +78,34 @@ export default class GPSComponent extends Component {
     // }
     
     render() {
+        const {navigation} = this.props;
+        const lat = navigation.getParam('restLat', null);
+        const long = navigation.getParam('restLong',null);
+        const name = navigation.getParam('restname');
+        const address = navigation.getParam('restaddress');
+        const rating = navigation.getParam('restrating');
+        const cuisine = navigation.getParam('restcuisine');
+        const image = navigation.getParam('restimage');
         return (
 
             <View style={styles.container}>
                 <MapView 
-                region={this.state.region}
-                onRegionChange={this.onRegionChange}
+                initialRegion={{latitude:Number(lat),longitude:Number(long), latitudeDelta:0.001,longitudeDelta:0.001}}
                 style={styles.map}
                 >
+                <Marker
+              coordinate={{latitude: Number(lat), longitude: Number(long)}}
+                />
                 </MapView>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Reviews')}
                     style={styles.resultBlock}>
                     <View style={styles.resultTextContainer}>
-                        <Text style={styles.Title}>RESTAURANT NAME</Text>
-                        <Text style={styles.resultText}>ADDRESS</Text>
-                        <Text style={styles.resultText}>RATING</Text>
-                        <Text style={styles.resultText}>CUISINE</Text>
+                        <Text style={styles.Title}>{name}</Text>
+                        <Text style={styles.resultText}>{address}</Text>
+                        <Text style={styles.resultText}>{rating}</Text>
+                        <Text style={styles.resultText}>{cuisine}</Text>
                     </View>
-                    <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                    <Image source={{uri: navigation.getParam('restimage') }}
                     style={styles.resultImage}/>
                 </TouchableOpacity>
             </View>
@@ -148,7 +158,7 @@ const styles = StyleSheet.create({
     },
     resultTextContainer: {
         width: '70%',
-        padding: 15,
+        paddingLeft: 10,
         justifyContent: 'center',
     },
 })
