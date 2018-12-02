@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import Permissions from 'react-native-permissions';
 import MapView, { Circle, Marker } from 'react-native-maps';
+import { Rating } from 'react-native-elements';
+
 
 let deviceWidth = Dimensions.get('window').width
 let deviceHeight = Dimensions.get('window').height
@@ -11,17 +13,16 @@ let deviceHeight = Dimensions.get('window').height
 export default class GPSComponent extends Component {
 
     static navigationOptions = {
-        title: "c h O m p !",
+        title: "Map",
         headerStyle: {
-          backgroundColor:'#BB736A',
-    },
+          backgroundColor:'#233142',
+        },
         headerTitleStyle: {
           fontWeight:'bold',
-          color:'#681a1e'
-          // color:'#233142'
-    },
-  }
-
+          color:'#f95959',
+        },
+        headerTintColor: '#f95959'
+    }
     // constructor() {
     //     super();
     //     this.state = {
@@ -94,7 +95,7 @@ export default class GPSComponent extends Component {
                 style={styles.map}
                 >
                 <Marker
-              coordinate={{latitude: Number(lat), longitude: Number(long)}}
+                    coordinate={{latitude: Number(lat), longitude: Number(long)}}
                 />
                 </MapView>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Reviews')}
@@ -102,7 +103,14 @@ export default class GPSComponent extends Component {
                     <View style={styles.resultTextContainer}>
                         <Text style={styles.Title}>{name}</Text>
                         <Text style={styles.resultText}>{address}</Text>
-                        <Text style={styles.resultText}>{rating}</Text>
+                        <Rating
+                            readonly
+                            type="star"
+                            startingValue={parseFloat(rating)}
+                            imageSize={17}
+                            onFinishRating={this.ratingCompleted}
+                            style={{flexDirection:'row' }}
+                            />
                         <Text style={styles.resultText}>{cuisine}</Text>
                     </View>
                     <Image source={{uri: navigation.getParam('restimage') }}
@@ -117,9 +125,8 @@ export default class GPSComponent extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fef4e8',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
     },
     map: {
         width: deviceWidth,
@@ -133,10 +140,11 @@ const styles = StyleSheet.create({
     },
     resultText : {
         color: 'black',
-        fontSize: 15,
+        fontSize: 13,
+        padding: 3,
     },
     resultBlock: {
-        backgroundColor: '#ea9085',
+        backgroundColor: 'white',
         position: 'absolute',
         width: deviceWidth - 20,
         height: 'auto',
@@ -144,21 +152,22 @@ const styles = StyleSheet.create({
         borderBottomColor: '#d6d6d6',
         borderBottomWidth: 1, 
         bottom: 10,
+
         zIndex: 100,
         borderRadius:8,
         elevation: 3,
-
     },
     resultImage: {
-        width:'30%',
-        height: 125,
+        width:'35%',
+        height: '100%',
+        backgroundColor: '#fa2',
         borderTopRightRadius:8,
         borderBottomRightRadius:8,
-
+        position: 'absolute',
+        right: 0
     },
     resultTextContainer: {
-        width: '70%',
-        paddingLeft: 10,
-        justifyContent: 'center',
+        width: '61%',
+        margin: 15,
     },
 })
