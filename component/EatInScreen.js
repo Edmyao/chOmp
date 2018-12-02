@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { AppRegistry, TextInput, Modal, BlurView } from 'react-native';
+import { AppRegistry, TextInput, Modal, Keyboard } from 'react-native';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -95,7 +95,7 @@ export default class App extends React.Component {
 
           <Modal visible={this.state.showModal} animationType="fade" transparent={true}
               onRequestClose={()=>console.warn("this is a close request")}>
-              
+
               <View style={styles.modalView}>
                 <View>
                   <Text> HELLO WORLD </Text>
@@ -110,8 +110,8 @@ export default class App extends React.Component {
                   </TouchableOpacity>
                 </View>
               </View>
-              
-          </Modal> 
+
+          </Modal>
 
         </View>
       </View>
@@ -202,7 +202,7 @@ resultText : {
 },
 modalView:{
       flex: 1,
-      justifyContent: 'center', 
+      justifyContent: 'center',
       alignItems: 'center',
       backgroundColor:'lightblue',
   },
