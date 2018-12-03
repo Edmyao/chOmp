@@ -1,7 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+<<<<<<< HEAD
 import { AppRegistry, TextInput, Modal, Keyboard } from 'react-native';
+=======
+import { AppRegistry, TextInput, Modal} from 'react-native';
+>>>>>>> b3fcfd90268cfb919f3b9bb3ddc4193388b9f52f
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,6 +15,11 @@ export default class App extends React.Component {
       retrievedrecipes: [],
       showModal: false,
       recipeDescription: '',
+      modalTitle:'',
+      modalIngredients:'',
+      modalHealth:'',
+      modalDiet:'',
+      modalImg:'',
     };
   }
 
@@ -28,6 +37,16 @@ export default class App extends React.Component {
         console.log('RECIPES: ' + recipeArray[3].label);
     })
 }
+
+pressModal(title,ingredients,health,diet,image){
+  this.setState({
+    modalTitle:title,
+    modalIngredients:ingredients,
+    modalHealth:health,
+    modalDiet:diet,
+    modalImg:image,
+  })
+};
 
   static navigationOptions = {
     title: "Let's cook!",
@@ -78,7 +97,10 @@ export default class App extends React.Component {
                 data={this.state.retrievedrecipes}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
-                <TouchableOpacity onPress={() => this.changeVisibility(true)}>
+                <TouchableOpacity onPress={() => {
+                  this.changeVisibility(true);
+                  this.pressModal(item.label,item.ingredientLines,item.healthLabels,item.dietLabels,item.image)
+                }}>
                 <View style={styles.resultBlock}>
                                     <Image source={{uri: item.image}}
                                     style={styles.resultImage}/>
@@ -98,8 +120,13 @@ export default class App extends React.Component {
 
               <View style={styles.modalView}>
                 <View>
-                  <Text> HELLO WORLD </Text>
-                  <Text> Put recipe stuff here </Text>
+                <Text>Image should be here</Text>
+                  <Image source={{uri: this.state.modalImg}}
+                                    style={styles.resultImage}/>
+                  <Text>{this.state.modalTitle}</Text>
+                  <Text> {this.state.modalIngredients} </Text>
+                  <Text> {this.state.modalHealth} </Text>
+                  <Text> {this.state.modalDiet} </Text>
                 </View>
 
                 <View>

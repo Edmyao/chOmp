@@ -6,6 +6,8 @@ import HomeScreen from './component/HomeScreen';
 import EatInScreen from './component/EatInScreen';
 import EatOutScreen from './component/EatOutScreen';
 import MapScreen from './component/MapScreen';
+import ReviewScreen from './component/ReviewScreen';
+
 
 const RootStack = createStackNavigator(
   {
@@ -20,10 +22,13 @@ const RootStack = createStackNavigator(
     },
     Map: {
       screen: MapScreen,
-    }
+    },
+    Reviews: {
+      screen: ReviewScreen,
+    },
   },
   {
-    initialRouteName: 'EatIn',
+    initialRouteName: 'Home',
   }
 );
 

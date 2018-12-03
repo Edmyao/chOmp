@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image, ScrollView, TouchableHighlight } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { AppRegistry, TextInput } from 'react-native';
+import { Rating } from 'react-native-elements';
 const Permissions = require('react-native-permissions').default
 
 export default class App extends React.Component {
@@ -86,16 +87,32 @@ export default class App extends React.Component {
                 scrollEnabled={true}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Map')}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
+                    restId:item.restaurant.R.res_id,
+                    restLat:item.restaurant.location.latitude,
+                    restLong:item.restaurant.location.longitude,
+                    restname:item.restaurant.name,
+                    restaddress:item.restaurant.location.address,
+                    restrating:item.restaurant.user_rating.aggregate_rating,
+                    restcuisine:item.restaurant.cuisines,
+                    restimage:item.restaurant.thumb,
+                })}>
                 <View style={styles.resultBlock}>
-                                    <Image source={{uri: item.restaurant.thumb}}
-                                    style={styles.resultImage}/>
-                                    <View style={styles.resultTextContainer}>
-                                        <Text style={styles.Title}>{item.restaurant.name}</Text>
-                                        <Text style={styles.resultText}>{item.restaurant.location.address}</Text>
-                                        <Text style={styles.resultText}>Rating: {item.restaurant.user_rating.aggregate_rating}/5</Text>
-                                        <Text style={styles.resultText}>{item.restaurant.cuisines}</Text>
-                                    </View>
+                        <Image source={{uri: item.restaurant.thumb}}
+                        style={styles.resultImage}/>
+                        <View style={styles.resultTextContainer}>
+                            <Text style={styles.Title}>{item.restaurant.name}</Text>
+                            <Text style={styles.resultText}>{item.restaurant.location.address}</Text>
+                            <Rating
+                                readonly
+                                type="star"
+                                startingValue={parseFloat(item.restaurant.user_rating.aggregate_rating)}
+                                imageSize={17}
+                                onFinishRating={this.ratingCompleted}
+                                style={{flexDirection:'row' }}
+                                />
+                            <Text style={styles.resultText}>{item.restaurant.cuisines}</Text>
+                        </View>
                 </View>
                 </TouchableOpacity>}
                 />
@@ -105,140 +122,38 @@ export default class App extends React.Component {
 	}
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  inputContainer:{
-    margin:5,
-    flex:1,
-    flexDirection:'row'
-  },
-  resultDiv:{
-    backgroundColor:'lightgray',
-    width:342,
-    position:'absolute',
-    flex:1,
-  },
-  searchButt:{
-  	bottom:10,
-    margin:10,
-    backgroundColor: '#233142',
-    height:40,
-    width:'15%',
-    justifyContent: 'center',
-    borderRadius:8,
-  },
-  search: {
-    height: 40,
-    width:275,
-    borderColor: '#233142',
-    borderWidth: 2,
-    borderRadius:8,
-    padding:10,
-    color:'#f95959',
-  },
-  buttText:{
-    alignSelf:'center',
-    color:'white',
-    fontSize:15,
-  },
-  text: {
-    fontSize: 15,
-  },
-  inputContainer:{
-    margin:5,
-    width: '95%',
-    flex:1,
-    flexDirection:'row',
-    justifyContent: 'center',
-},
-searchContainer: {
-    width: '100%',
-    height: 50,
-    flexDirection:'row',
-    alignItems: 'center',
-},
-filterContainer: {
-    width: '100%',
-    height: 40,
-    flexDirection:'row',
-    alignItems: 'center',
-    position:'absolute',
-    top:50
-},
-resultDiv:{
-    height:'auto',
-    width:'100%',
-    position:'absolute',
-    flexDirection:'column',
-    top:95,
-},
-searchButt:{
-    position: 'absolute',
-    backgroundColor: '#233142',
-    height:40,
-    width:'20%',
-    justifyContent: 'center',
-    borderRadius:8,
-    right:0
-},
-search: {
-    height: 40,
-    width:'77%',
-    borderColor: '#233142',
-    borderWidth: 2,
-    padding:5,
-    borderRadius:8,
-    color:'#f95959',
-    left:0
-},
-filter: {
-    height: 30,
-    width:'auto',
-    borderColor: '#233142',
-    borderWidth: 2,
-    borderRadius:15,
-    color:'#f95959',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft:15, paddingRight:15,
-    margin: 5,
-},
-buttText:{
-    alignSelf:'center',
-    color:'white',
-    fontSize:15,
-    fontFamily:'sans-serif-light',
-},
-resultBlock: {
-    width:'100%',
-    height: 160,
-    backgroundColor: '#ea9085',
-    borderRadius: 8,
-    elevation: 3,
-    padding: 15,
-    flexDirection:'row',
-    marginBottom: 10
-},
-resultImage: {
-    width:'35%',
-    height: 125,
-    backgroundColor: '#fa2',
-    marginRight: 15,
-},
-resultTextContainer: {
-    width: '60%',
-
-},
-Title:{
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 'bold'
-},
-resultText : {
-    color: 'white',
-    fontSize: 15,
-}
+    container: {
+        backgroundColor: '#e2e2e2',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    resultBlock: {
+        marginTop: 7,
+        width:'100%',
+        height: 'auto',
+        backgroundColor: 'white',
+        elevation: 3,
+        flexDirection:'row',
+        justifyContent: 'center',
+    },
+    resultImage: {
+        width:'35%',
+        height: '100%',
+        backgroundColor: '#fa2',
+    },
+    resultTextContainer: {
+        width: '62%',
+        margin: 15,
+    },
+    Title:{
+        color: 'black',
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
+    resultText : {
+        color: 'black',
+        fontSize: 13,
+        padding: 3,
+        marginRight: 15
+    }
 });
