@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { AppRegistry, TextInput, Modal} from 'react-native';
+import { AppRegistry, TextInput, Modal, ScrollView, Keyboard } from 'react-native';
+
+import { BlurView } from 'expo';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,8 +31,7 @@ export default class App extends React.Component {
         }
         this.setState({
             retrievedrecipes: recipeArray
-        })
-        console.log('RECIPES: ' + recipeArray[3].label);
+        });
     })
 }
 
@@ -41,21 +42,20 @@ pressModal(title,ingredients,health,diet,image){
     modalHealth:health,
     modalDiet:diet,
     modalImg:image,
-  })
+  });
+  console.log(this.state.modalImg);
 };
 
   static navigationOptions = {
-    title: "Let's cook!",
-    headerStyle: {
-      // backgroundColor:'#9DC882',
-      backgroundColor:'#BB736A',
-    },
-    headerTitleStyle: {
-      fontWeight:'bold',
-      // color:'#436e4f'
-      color:'#681a1e',
-    },
-    headerTintColor: '#f95959'
+      title: "Let's go somewhere nearby!",
+      headerStyle: {
+        backgroundColor:'#233142',
+      },
+      headerTitleStyle: {
+        fontWeight:'bold',
+        color:'#ea9085',},
+
+            headerTintColor: '#ea9085'
   }
 
   submitAndClear = () => {
@@ -76,15 +76,16 @@ pressModal(title,ingredients,health,diet,image){
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput placeholder="Type here to search recipes!"
-            placeholderTextColor="gray" clearButtonMode='always'
+            placeholderTextColor="gray" clearButtonMode='always' onSubmitEditing={()=> {this.fetchToDos(this.state.text);Keyboard.dismiss}}
             onChangeText={(text) => this.setState({text})}
             style={styles.search}
             value={this.state.text}/>
 
-          <TouchableOpacity onPress={()=>this.fetchToDos(this.state.text)}
+          <TouchableOpacity onPress={()=> {this.fetchToDos(this.state.text);Keyboard.dismiss}}
             style={styles.searchButt} activeOpacity={0.4} >
             <Text style={styles.buttText}>Search</Text>
           </TouchableOpacity>
+
 
 
           <View style={styles.resultDiv}>
@@ -95,45 +96,55 @@ pressModal(title,ingredients,health,diet,image){
                 renderItem={({item}) =>
                 <TouchableOpacity onPress={() => {
                   this.changeVisibility(true);
-                  this.pressModal(item.label,item.ingredientLines,item.healthLabels,item.dietLabels,item.image)
+                  this.pressModal(item.label,item.ingredientLines,item.healthLabels,item.dietLabels,item.image);
                 }}>
                 <View style={styles.resultBlock}>
-                                    <Image source={{uri: item.image}}
-                                    style={styles.resultImage}/>
-                                    <View style={styles.resultTextContainer}>
-                                        <Text style={styles.Title}>{item.label}</Text>
-                                        <Text style={styles.resultText}>{item.healthLabels[0]}</Text>
-                                        <Text style={styles.resultText}>Calories: {item.calories.toFixed()}</Text>
-                                    </View>
+                    <Image source={{uri: item.image}}
+                    style={styles.resultImage}/>
+                    <View style={styles.resultTextContainer}>
+                        <Text style={styles.Title}> {item.label}</Text>
+                        <Text style={styles.resultText}>{item.healthLabels[0]}</Text>
+                        <Text style={styles.resultText}>Calories: {item.calories.toFixed()}</Text>
+                    </View>
                 </View>
                 </TouchableOpacity>}
                 />
           </View>
 
+          <Modal visible={this.state.showModal} animationType="slide" transparent={true}
+              onRequestClose={ () => {
+                console.warn("this is a close request");
+                this.changeVisibility(false)
+                }}>
 
-          <Modal visible={this.state.showModal} animationType="fade" transparent={true}
-              onRequestClose={()=>console.warn("this is a close request")}>
-              
+            <BlurView tint="dark" intensity={40} style={StyleSheet.absoluteFill}>
               <View style={styles.modalView}>
-                <View>
-                <Text>Image should be here</Text>
-                  <Image source={{uri: this.state.modalImg}}
-                                    style={styles.resultImage}/>
-                  <Text>{this.state.modalTitle}</Text>
-                  <Text> {this.state.modalIngredients} </Text>
-                  <Text> {this.state.modalHealth} </Text>
-                  <Text> {this.state.modalDiet} </Text>
-                </View>
+                <View style={styles.innerContainer}>
+                  <Text style={styles.modalTitle}> {this.state.modalTitle.toUpperCase()}</Text>
+                  <View>
+                    <Image style={styles.modalImg} source={{uri:this.state.modalImg}}/>
+                  </View>
+                  
+                  <ScrollView>
+                    <Text style={styles.modalLabels}>YOU WILL NEED: </Text>
+                      <Text style={styles.resultText}>{this.state.modalIngredients.length ? this.state.modalIngredients.join(", ") : ''}</Text>
+                    <Text style={styles.modalLabels}>HEALTH: </Text>
+                      <Text style={styles.resultText}>{this.state.modalHealth.length ? this.state.modalHealth.join(", ") : ' - '} </Text>
+                    <Text style={styles.modalLabels}>DIET: </Text>
+                      <Text style={styles.resultText}>{this.state.modalDiet.length ? this.state.modalDiet.join(", ") : ' - '} </Text>
+                  </ScrollView>
+
+                  </View>
 
                 <View>
                   <TouchableOpacity onPress={()=>{
-                      this.changeVisibility(false);
+                      this.changeVisibility(false); 
                   }}>
                       <Text style={styles.closeButt}> CLOSE </Text>
                   </TouchableOpacity>
                 </View>
               </View>
-              
+            </BlurView>
           </Modal> 
 
         </View>
@@ -159,17 +170,15 @@ const styles = StyleSheet.create({
     flexDirection:'row',
   },
   resultDiv:{
-    backgroundColor:'lightgray',
     height:'90%',
+    width:'100%',
     bottom:0,
-    width:342,
     position:'absolute'
   },
   searchButt:{
     bottom:10,
     margin:10,
-    // backgroundColor: '#9DC882',
-    backgroundColor:'#BB736A',
+    backgroundColor:'#ea9085',
     height:40,
     width:'15%',
     justifyContent: 'center',
@@ -179,12 +188,10 @@ const styles = StyleSheet.create({
   search: {
     height: 40,
     width:270,
-    // borderColor: '#9DC882',
     borderColor:'#681a1e',
     borderWidth: 2,
     borderRadius:8,
     padding:10,
-    // color:'#436e4f',
     color:'#f95959',
   },
   buttText:{
@@ -197,46 +204,67 @@ const styles = StyleSheet.create({
   },
   resultBlock: {
     width:'100%',
-    height: 150,
+    height: 'auto',
     backgroundColor: '#ea9085',
-    borderRadius: 8,
     elevation: 3,
-    padding: 15,
     flexDirection:'row',
     marginBottom: 10
-},
-resultImage: {
-    width:'35%',
-    height: 125,
-    backgroundColor: '#fa2',
-    marginRight: 15,
-},
-resultTextContainer: {
-    width: '60%',
-},
-Title:{
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 'bold'
-},
-resultText : {
-    color: 'white',
-    fontSize: 15,
-},
-modalView:{
-      flex: 1,
-      justifyContent: 'center', 
-      alignItems: 'center',
-      backgroundColor:'lightblue',
   },
-closeButt:{
-      alignSelf: 'center',
-      textAlign: 'center',
-      borderColor: '#8E8E8E',
-      borderWidth: StyleSheet.hairlineWidth,
-      paddingHorizontal: 20,
-      paddingVertical: 10,
-      borderRadius: 5,
-      backgroundColor:'#DCDCDC'
+  resultImage: {
+    width:'35%',
+    height:'auto',
+    marginRight: 15,
+  },
+  resultTextContainer: {
+    width: '60%',
+  },
+  Title:{
+      color: 'white',
+      fontSize: 18,
+      fontWeight: 'bold'
+  },
+  resultText : {
+      color: '#681a1e',
+      fontSize: 15,
+      marginLeft:5,
+  },
+  modalView:{
+      justifyContent: 'center', 
+      alignItems: 'center',      
+  },
+  innerContainer: {
+    backgroundColor:'#fef4e8',
+    height:'75%',
+    width:'95%',
+    borderRadius:5,
+  },
+  closeButt:{
+    alignSelf: 'center',
+    textAlign: 'center',
+    marginTop:5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor:'#fff',
+    color:'#681a1e'
+  },
+  modalTitle:{
+    alignSelf:'center',
+    fontSize: 22,
+    fontWeight:'bold',
+    color:'#681a1e',
+  },
+  modalLabels:{
+    color: '#681a1e',
+    fontSize: 15,
+    marginLeft:5,
+    fontWeight:'bold',
+  },
+  modalImg: {
+    height:250,
+    width:250,
+    borderRadius:5,
+    alignSelf:'center',
+    margin:10,
   },
 });
