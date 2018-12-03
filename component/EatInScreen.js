@@ -48,12 +48,12 @@ pressModal(title,ingredients,health,diet,image){
     title: "Let's cook!",
     headerStyle: {
       // backgroundColor:'#9DC882',
-      backgroundColor:'#233142',
+      backgroundColor:'#BB736A',
     },
     headerTitleStyle: {
       fontWeight:'bold',
       // color:'#436e4f'
-      color:'#f95959',
+      color:'#681a1e',
     },
     headerTintColor: '#f95959'
   }
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     bottom:10,
     margin:10,
     // backgroundColor: '#9DC882',
-    backgroundColor:'#233142',
+    backgroundColor:'#BB736A',
     height:40,
     width:'15%',
     justifyContent: 'center',
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     height: 40,
     width:270,
     // borderColor: '#9DC882',
-    borderColor:'#233142',
+    borderColor:'#681a1e',
     borderWidth: 2,
     borderRadius:8,
     padding:10,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   buttText:{
     alignSelf:'center',
-    color:'white',
+    color:'#681a1e',
     fontSize:15,
   },
   text: {

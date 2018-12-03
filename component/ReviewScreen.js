@@ -31,8 +31,34 @@ export default class GPSComponent extends Component {
         locationPermission: 'unknown',
             position: 'unknown',
             latitude: 'unknown',
-            longitude: 'unknown'
+            longitude: 'unknown',
+            restaurantid: '',
+            reviews: [],
       };
+    }
+
+   fetchToDos(id) {
+    fetch(`https://developers.zomato.com/api/v2.1/reviews?res_id=${id}&count=10&apikey=f8fd515e2cdc8ed43c71864677bc2e2c`)
+    .then((response) => response.json())
+    .then((response) => {
+        let nameArray = [];
+        for (var i = 0; i < response.user_reviews.length; i++){
+            nameArray.push(response.user_reviews[i]);
+            console.log(response.user_reviews[i].review.rating);
+        }
+        this.setState({
+            places: nameArray,
+        })
+    })
+}
+
+    componentDidMount(){
+        const {navigation} = this.props;
+        const restid = navigation.getParam('restaurantid');
+        this.setState({
+            restaurantid:restid
+        })
+        this.fetchToDos(this.state.restaurantid);
     }
 
 
@@ -41,7 +67,7 @@ export default class GPSComponent extends Component {
             <View style={styles.container}>
                 <View style={styles.resultBlock}>
                     <View style={styles.resultTextContainer}>
-                        <Text style={styles.Title}>RESTAURANT NAME</Text>
+                        <Text style={styles.Title}>{this.state.restaurantid}</Text>
                     </View>
 
                 </View>
