@@ -1,11 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-<<<<<<< HEAD
 import { AppRegistry, TextInput, Modal, Keyboard } from 'react-native';
-=======
-import { AppRegistry, TextInput, Modal} from 'react-native';
->>>>>>> b3fcfd90268cfb919f3b9bb3ddc4193388b9f52f
 
 export default class App extends React.Component {
   constructor(props) {
