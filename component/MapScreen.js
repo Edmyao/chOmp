@@ -86,6 +86,7 @@ export default class GPSComponent extends Component {
         const rating = navigation.getParam('restrating');
         const cuisine = navigation.getParam('restcuisine');
         const image = navigation.getParam('restimage');
+        const id = navigation.getParam('restId');
         return (
 
             <View style={styles.container}>
@@ -97,11 +98,13 @@ export default class GPSComponent extends Component {
               coordinate={{latitude: Number(lat), longitude: Number(long)}}
                 />
                 </MapView>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Reviews')}
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Reviews', {
+                    restaurantid: id
+                })}
                     style={styles.resultBlock}>
                     <View style={styles.resultTextContainer}>
                         <Text style={styles.Title}>{name}</Text>
-                        <Text style={styles.resultText}>{address}</Text>
+                        <Text style={styles.resultText}>{id}</Text>
                         <Text style={styles.resultText}>{rating}</Text>
                         <Text style={styles.resultText}>{cuisine}</Text>
                     </View>

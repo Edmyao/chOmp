@@ -241,12 +241,12 @@ const styles = StyleSheet.create({
         width: '60%',
     },
     Title:{
-        color: 'white',
+        color: '#681a1e',
         fontSize: 22,
         fontWeight: 'bold'
     },
     resultText : {
-        color: 'white',
+        color: '#681a1e',
         fontSize: 15,
     }
 });
