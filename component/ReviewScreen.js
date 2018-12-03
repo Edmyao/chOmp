@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
 import Permissions from 'react-native-permissions';
 import MapView, { Circle, Marker } from 'react-native-maps';
+import { Rating } from 'react-native-elements';
+
 
 let deviceWidth = Dimensions.get('window').width
 let deviceHeight = Dimensions.get('window').height
@@ -11,16 +13,16 @@ let deviceHeight = Dimensions.get('window').height
 export default class GPSComponent extends Component {
 
     static navigationOptions = {
-        title: "c h O m p !",
+        title: "Reviews",
         headerStyle: {
-          backgroundColor:'#BB736A',
-    },
+          backgroundColor:'#233142',
+        },
         headerTitleStyle: {
           fontWeight:'bold',
-          color:'#681a1e'
-          // color:'#233142'
-    },
-  }
+          color:'#f95959',
+        },
+        headerTintColor: '#f95959'
+    }
     constructor() {
       super();
       this.state = {
@@ -71,42 +73,40 @@ export default class GPSComponent extends Component {
                 </View>
                 <View style={styles.reviewContainer}>
                     <View style={styles.overallReview}>
-                        <Text style={styles.avgReview}>4.5</Text>
-                        <Text style={styles.avgReview}>*****</Text>
+                        <Text style={styles.avgReview}>aggregate_review</Text>
+                        <Rating
+                            readonly
+                            type="star"
+                            startingValue={3.4}
+                            imageSize={30}
+                            onFinishRating={this.ratingCompleted}
+                            style={{flexDirection:'row' }}
+                        />
                     </View>
-                    <View style={styles.review}>
-                        <View style={styles.reviewHeader}>
-                            <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
-                            style={styles.reviewImage}/>
-                            <View style={styles.reviewUserInfo}>
-                                <Text style={styles.reviewText}>NAME</Text>
-                                <Text style={styles.reviewText}>Rating</Text>
+                
+                        <View style={styles.review}>
+                            <View style={styles.reviewHeader}>
+                                <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                                style={styles.reviewImage}/>
+                                <View style={styles.reviewUserInfo}>
+                                    <Text style={styles.reviewText}>NAME</Text>
+                                    <Text>Foodie Level</Text>
+                                    <View style={styles.rating}>
+                                        <Rating
+                                            readonly
+                                            type="star"
+                                            startingValue={1}
+                                            imageSize={15}
+                                            onFinishRating={this.ratingCompleted}
+                                            style={{flexDirection:'row', paddingRight: 5 }}
+                                        />
+                                        <Text>Review_time_friendly</Text>
+                                    </View>
+                                </View>
                             </View>
+                            <Text>Review text</Text>
                         </View>
-                        <Text>orem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis dolor dignissim, sagittis quam eget, tempus lorem. Pellentesque eu semper velit. Integer ac vulputate sem. Curabitur nec fermentum purus. Nullam nec laoreet arcu, at semper metus. Nam eget pulvinar orci. Aliquam a ipsum eget massa elementum lobortis. Mo</Text>
-                    </View>
-                                        <View style={styles.review}>
-                        <View style={styles.reviewHeader}>
-                            <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
-                            style={styles.reviewImage}/>
-                            <View style={styles.reviewUserInfo}>
-                                <Text style={styles.reviewText}>NAME</Text>
-                                <Text style={styles.reviewText}>Rating</Text>
-                            </View>
-                        </View>
-                        <Text>orem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis dolor dignissim, sagittis quam eget, tempus lorem. Pellentesque eu semper velit. Integer ac vulputate sem. Curabitur nec fermentum purus. Nullam nec laoreet arcu, at semper metus. Nam eget pulvinar orci. Aliquam a ipsum eget massa elementum lobortis. Mo</Text>
-                    </View>
-                                        <View style={styles.review}>
-                        <View style={styles.reviewHeader}>
-                            <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
-                            style={styles.reviewImage}/>
-                            <View style={styles.reviewUserInfo}>
-                                <Text style={styles.reviewText}>NAME</Text>
-                                <Text style={styles.reviewText}>Rating</Text>
-                            </View>
-                        </View>
-                        <Text>orem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis dolor dignissim, sagittis quam eget, tempus lorem. Pellentesque eu semper velit. Integer ac vulputate sem. Curabitur nec fermentum purus. Nullam nec laoreet arcu, at semper metus. Nam eget pulvinar orci. Aliquam a ipsum eget massa elementum lobortis. Mo</Text>
-                    </View>
+                    
                 </View>
             </View>
 
@@ -117,7 +117,7 @@ export default class GPSComponent extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fef4e8',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     },
     Title:{
         color: 'black',
-        fontSize: 22,
+        fontSize: 30,
         fontWeight: 'bold',
 
     },
@@ -155,8 +155,9 @@ const styles = StyleSheet.create({
     },
     avgReview: {
         color: 'black',
-        fontSize: 22,
-        fontWeight: 'bold'
+        fontSize: 25,
+        fontWeight: 'bold',
+        paddingRight: 10
     },
     review: {
         padding:10,
@@ -180,6 +181,9 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         flexDirection:'column',
         justifyContent: 'center'
+    },
+    rating: {
+        flexDirection:'row',
     }
 
 })
