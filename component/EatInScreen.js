@@ -1,12 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { AppRegistry, TextInput, Modal, ScrollView, Keyboard, Dimensions } from 'react-native';
+import { AppRegistry, TextInput, Modal, ScrollView, Keyboard, Dimensions, Linking } from 'react-native';
 
 import { BlurView } from 'expo';
-
-let deviceWidth = Dimensions.get('window').width
-let deviceHeight = Dimensions.get('window').height
+var { width, height } = Dimensions.get('window');
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,11 +19,12 @@ export default class App extends React.Component {
       modalHealth:'',
       modalDiet:'',
       modalImg:'',
+      modalUrl:'',
     };
   }
 
   fetchToDos(searchedfood) {
-    fetch(`https://api.edamam.com/search?q=${searchedfood}&app_id=0f001ce6&app_key=0a4bd5307c6118f918603e4bb13629f9&from=0&to=9`)
+    fetch(`https://api.edamam.com/search?q=${searchedfood}&app_id=bb804bda&app_key=0aa391c92f87ea1d2035fe713d9efb2d&from=0&to=9`)
     .then((response) => response.json())
     .then((response) => {
         let recipeArray = [];
@@ -38,19 +37,20 @@ export default class App extends React.Component {
     })
 }
 
-pressModal(title,ingredients,health,diet,image){
+pressModal(title,ingredients,health,diet,image,url){
   this.setState({
     modalTitle:title,
     modalIngredients:ingredients,
     modalHealth:health,
     modalDiet:diet,
     modalImg:image,
+    modalUrl: url,
   });
   console.log(this.state.modalImg);
 };
 
   static navigationOptions = {
-      title: "Let's go somewhere nearby!",
+      title: "Let's cook!",
       headerStyle: {
         backgroundColor:'#233142',
       },
@@ -93,7 +93,7 @@ pressModal(title,ingredients,health,diet,image){
                 renderItem={({item}) =>
                 <TouchableOpacity onPress={() => {
                   this.changeVisibility(true);
-                  this.pressModal(item.label,item.ingredientLines,item.healthLabels,item.dietLabels,item.image);
+                  this.pressModal(item.label,item.ingredientLines,item.healthLabels,item.dietLabels,item.image,item.url);
                 }}>
                 <View style={styles.resultBlock}>
                     <Image source={{uri: item.image}}
@@ -121,28 +121,30 @@ pressModal(title,ingredients,health,diet,image){
                   <View>
                     <Image style={styles.modalImg} source={{uri:this.state.modalImg}}/>
                   </View>
-                  
+
                   <ScrollView>
                     <Text style={styles.modalLabels}>YOU WILL NEED: </Text>
-                      <Text style={styles.resultText}>{this.state.modalIngredients.length ? this.state.modalIngredients.join(", ") : ''}</Text>
+                      <Text style={styles.resultText}>{this.state.modalIngredients.length ? this.state.modalIngredients.join("\n ") : ''}</Text>
                     <Text style={styles.modalLabels}>HEALTH: </Text>
                       <Text style={styles.resultText}>{this.state.modalHealth.length ? this.state.modalHealth.join(", ") : ' - '} </Text>
                     <Text style={styles.modalLabels}>DIET: </Text>
                       <Text style={styles.resultText}>{this.state.modalDiet.length ? this.state.modalDiet.join(", ") : ' - '} </Text>
+                    <Text style ={styles.modalLabels}>Find recipe:</Text>
+                        <Text onPress={() => Linking.openURL(this.state.modalUrl)}>{this.state.modalUrl}</Text>
                   </ScrollView>
 
                   </View>
 
                 <View>
                   <TouchableOpacity onPress={()=>{
-                      this.changeVisibility(false); 
+                      this.changeVisibility(false);
                   }}>
                       <Text style={styles.closeButt}> CLOSE </Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </BlurView>
-          </Modal> 
+          </Modal>
       </View>
     );
   }
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
   },
   resultDiv:{
     height:'90%',
-    width:deviceWidth,
+    width:width,
     bottom:0,
     position:'absolute',
   },
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   resultBlock: {
-    width:deviceWidth,
+    width:width,
     height: 'auto',
     backgroundColor: '#ea9085',
     elevation: 3,
@@ -217,8 +219,10 @@ const styles = StyleSheet.create({
   },
   modalView:{
     flex:1,
-    justifyContent: 'center', 
-    alignItems: 'center',      
+    alignItems: 'center',   
+    justifyContent: 'center',
+    height: height,
+    width: width
   },
   innerContainer: {
     backgroundColor:'#fef4e8',
@@ -255,4 +259,4 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     margin:10,
   },
-});
+})
