@@ -100,15 +100,15 @@ export default class GPSComponent extends Component {
                 />
                 </MapView>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Reviews', {
-                    restaurantid: id
+                    restaurantid: id,
+                    restaurantname: name,
+                    restaurantreview: rating,
                 })}
                     style={styles.resultBlock}>
                     <View style={styles.resultTextContainer}>
                         <Text style={styles.Title}>{name}</Text>
-<<<<<<< HEAD
                         <Text style={styles.resultText}>{id}</Text>
                         <Text style={styles.resultText}>{rating}</Text>
-=======
                         <Text style={styles.resultText}>{address}</Text>
                         <Rating
                             readonly
@@ -118,7 +118,6 @@ export default class GPSComponent extends Component {
                             onFinishRating={this.ratingCompleted}
                             style={{flexDirection:'row' }}
                             />
->>>>>>> b3fcfd90268cfb919f3b9bb3ddc4193388b9f52f
                         <Text style={styles.resultText}>{cuisine}</Text>
                     </View>
                     <Image source={{uri: navigation.getParam('restimage') }}

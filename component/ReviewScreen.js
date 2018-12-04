@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet, Dimensions, Image, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, Image, ScrollView, FlatList } from 'react-native';
 import Permissions from 'react-native-permissions';
 import MapView, { Circle, Marker } from 'react-native-maps';
 import { Rating } from 'react-native-elements';
@@ -34,6 +34,7 @@ export default class GPSComponent extends Component {
             longitude: 'unknown',
             restaurantid: '',
             reviews: [],
+            restaurantname: '',
       };
     }
 
@@ -47,67 +48,72 @@ export default class GPSComponent extends Component {
             console.log(response.user_reviews[i].review.rating);
         }
         this.setState({
-            places: nameArray,
+            reviews: nameArray,
         })
+        console.log(nameArray);
     })
 }
 
     componentDidMount(){
         const {navigation} = this.props;
         const restid = navigation.getParam('restaurantid');
-        this.setState({
-            restaurantid:restid
-        })
-        this.fetchToDos(this.state.restaurantid);
+        this.fetchToDos(restid);
     }
 
 
     render() {
+       const {navigation} = this.props;
+        const restname = navigation.getParam('restaurantname');
+        const restreview = navigation.getParam('restaurantreview');
         return (
             <View style={styles.container}>
                 <View style={styles.resultBlock}>
                     <View style={styles.resultTextContainer}>
-                        <Text style={styles.Title}>{this.state.restaurantid}</Text>
+                        <Text style={styles.Title}>{restname}</Text>
                     </View>
 
                 </View>
-                <View style={styles.reviewContainer}>
                     <View style={styles.overallReview}>
-                        <Text style={styles.avgReview}>aggregate_review</Text>
+                        <Text style={styles.avgReview}>{restreview}</Text>
                         <Rating
                             readonly
                             type="star"
-                            startingValue={3.4}
+                            startingValue={parseFloat(restreview)}
                             imageSize={30}
                             onFinishRating={this.ratingCompleted}
                             style={{flexDirection:'row' }}
                         />
                     </View>
-                
+
+                    <FlatList
+                    data={this.state.reviews}
+                    scrollEnabled={true}
+                    keyExtractor={(x, i) => i.toString()}
+                    renderItem={({item}) =>
                         <View style={styles.review}>
                             <View style={styles.reviewHeader}>
-                                <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+                                <Image source={{uri: item.review.user.profile_image}}
                                 style={styles.reviewImage}/>
                                 <View style={styles.reviewUserInfo}>
-                                    <Text style={styles.reviewText}>NAME</Text>
-                                    <Text>Foodie Level</Text>
+                                    <Text style={styles.reviewText}>{item.review.user.name}</Text>
+                                    <Text>{item.review.user.foodie_level}</Text>
                                     <View style={styles.rating}>
                                         <Rating
                                             readonly
                                             type="star"
-                                            startingValue={1}
+                                            startingValue={parseFloat(item.review.rating)}
                                             imageSize={15}
                                             onFinishRating={this.ratingCompleted}
                                             style={{flexDirection:'row', paddingRight: 5 }}
                                         />
-                                        <Text>Review_time_friendly</Text>
+                                        <Text>{item.review.review_time_friendly}</Text>
                                     </View>
                                 </View>
                             </View>
-                            <Text>Review text</Text>
-                        </View>
+                            <Text>{item.review.review_text}</Text>
+                        </View>}
+                        />
                     
-                </View>
             </View>
 
         )
@@ -176,6 +182,7 @@ const styles = StyleSheet.create({
     reviewImage: {
         height: 50,
         width: 50,
+        borderRadius:25,
     },
     reviewUserInfo: {
         marginLeft: 10,
