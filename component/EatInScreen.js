@@ -1,9 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import { AppRegistry, TextInput, Modal, ScrollView, Keyboard } from 'react-native';
+import { AppRegistry, TextInput, Modal, ScrollView, Keyboard, Dimensions } from 'react-native';
 
 import { BlurView } from 'expo';
+
+let deviceWidth = Dimensions.get('window').width
+let deviceHeight = Dimensions.get('window').height
 
 export default class App extends React.Component {
   constructor(props) {
@@ -80,16 +83,10 @@ pressModal(title,ingredients,health,diet,image){
             onChangeText={(text) => this.setState({text})}
             style={styles.search}
             value={this.state.text}/>
-
-          <TouchableOpacity onPress={()=> {this.fetchToDos(this.state.text);Keyboard.dismiss}}
-            style={styles.searchButt} activeOpacity={0.4} >
-            <Text style={styles.buttText}>Search</Text>
-          </TouchableOpacity>
-
+        </View>
 
 
           <View style={styles.resultDiv}>
-
                <FlatList
                 data={this.state.retrievedrecipes}
                 keyExtractor={(x, i) => i.toString()}
@@ -102,7 +99,7 @@ pressModal(title,ingredients,health,diet,image){
                     <Image source={{uri: item.image}}
                     style={styles.resultImage}/>
                     <View style={styles.resultTextContainer}>
-                        <Text style={styles.Title}> {item.label}</Text>
+                        <Text style={styles.Title}>{item.label}</Text>
                         <Text style={styles.resultText}>{item.healthLabels[0]}</Text>
                         <Text style={styles.resultText}>Calories: {item.calories.toFixed()}</Text>
                     </View>
@@ -146,8 +143,6 @@ pressModal(title,ingredients,health,diet,image){
               </View>
             </BlurView>
           </Modal> 
-
-        </View>
       </View>
     );
   }
@@ -168,26 +163,17 @@ const styles = StyleSheet.create({
     margin:5,
     flex:1,
     flexDirection:'row',
+    width:'90%'
   },
   resultDiv:{
     height:'90%',
-    width:'100%',
+    width:deviceWidth,
     bottom:0,
-    position:'absolute'
-  },
-  searchButt:{
-    bottom:10,
-    margin:10,
-    backgroundColor:'#ea9085',
-    height:40,
-    width:'15%',
-    justifyContent: 'center',
-    borderRadius:8,
-    elevation: 3,
+    position:'absolute',
   },
   search: {
     height: 40,
-    width:270,
+    width:'100%',
     borderColor:'#681a1e',
     borderWidth: 2,
     borderRadius:8,
@@ -203,34 +189,36 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   resultBlock: {
-    width:'100%',
+    width:deviceWidth,
     height: 'auto',
     backgroundColor: '#ea9085',
     elevation: 3,
     flexDirection:'row',
-    marginBottom: 10
+    marginBottom: 10,
+    left:0,
   },
   resultImage: {
     width:'35%',
     height:'auto',
-    marginRight: 15,
+    marginRight: 5,
   },
   resultTextContainer: {
     width: '60%',
   },
   Title:{
-      color: 'white',
-      fontSize: 18,
-      fontWeight: 'bold'
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold'
   },
   resultText : {
-      color: '#681a1e',
-      fontSize: 15,
-      marginLeft:5,
+    color: '#681a1e',
+    fontSize: 15,
+    marginLeft:5,
   },
   modalView:{
-      justifyContent: 'center', 
-      alignItems: 'center',      
+    flex:1,
+    justifyContent: 'center', 
+    alignItems: 'center',      
   },
   innerContainer: {
     backgroundColor:'#fef4e8',
