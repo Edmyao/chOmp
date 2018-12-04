@@ -19,18 +19,18 @@ export default class App extends React.Component {
 	}
 
 	static navigationOptions = {
-	    title: "Let's go somewhere nearby!",
+	    title: "Places nearby!",
 	    headerStyle: {
 	      backgroundColor:'#233142',
 	    },
 	    headerTitleStyle: {
 	      fontWeight:'bold',
-	      color:'#f95959',
+	      color:'#ea9085',
 	    },
-	    headerTintColor: '#f95959'
+	    headerTintColor: '#ea9085'
 	}
 
-	    _requestPermission(){
+	_requestPermission(){
         console.log(Permissions);
     }
 
@@ -49,12 +49,8 @@ export default class App extends React.Component {
 }
 
     componentDidMount(){
-        console.log('Start');
         this._requestPermission();
-        console.log('Check position');
         navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position.coords);
-            console.log('My position: ' + position.coords.latitude + ', ' + position.coords.longitude)
             let coordinates = position.coords.latitude + ', ' + position.coords.longitude;
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;

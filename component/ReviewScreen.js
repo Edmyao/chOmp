@@ -45,12 +45,10 @@ export default class GPSComponent extends Component {
         let nameArray = [];
         for (var i = 0; i < response.user_reviews.length; i++){
             nameArray.push(response.user_reviews[i]);
-            console.log(response.user_reviews[i].review.rating);
         }
         this.setState({
             reviews: nameArray,
         })
-        console.log(nameArray);
     })
 }
 

@@ -46,7 +46,6 @@ pressModal(title,ingredients,health,diet,image,url){
     modalImg:image,
     modalUrl: url,
   });
-  console.log(this.state.modalImg);
 };
 
   static navigationOptions = {
@@ -129,8 +128,10 @@ pressModal(title,ingredients,health,diet,image,url){
                       <Text style={styles.resultText}>{this.state.modalHealth.length ? this.state.modalHealth.join(", ") : ' - '} </Text>
                     <Text style={styles.modalLabels}>DIET: </Text>
                       <Text style={styles.resultText}>{this.state.modalDiet.length ? this.state.modalDiet.join(", ") : ' - '} </Text>
-                    <Text style ={styles.modalLabels}>Find recipe:</Text>
-                        <Text onPress={() => Linking.openURL(this.state.modalUrl)}>{this.state.modalUrl}</Text>
+                    <Text style={styles.modalLabels}>FIND RECIPE HERE: </Text>
+                      <TouchableOpacity>
+                        <Text style={styles.urlText} onPress={() => Linking.openURL(this.state.modalUrl)}>{this.state.modalUrl}</Text>
+                      </TouchableOpacity>
                   </ScrollView>
 
                   </View>
@@ -259,4 +260,11 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     margin:10,
   },
+  urlText: {
+    textDecorationLine:'underline',
+    alignSelf:'center',
+    color:'#233142',
+    marginBottom:5,
+
+  }
 })

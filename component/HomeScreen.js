@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 export default class App extends React.Component {
 
   static navigationOptions = {
-    title: "c h O m p !",
+    title: "c h o m p !",
     headerStyle: {
       backgroundColor:'#BB736A',
     },

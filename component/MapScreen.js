@@ -23,18 +23,6 @@ export default class GPSComponent extends Component {
         },
         headerTintColor: '#f95959'
     }
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         // region: {
-    //         //     latitude: 50.60254331180157,
-    //         //     latitudeDelta: 0.2729186541296684,
-    //         //     longitude: 16.721875704824924,
-    //         //     longitudeDelta: 0.26148553937673924,
-    //         // },
-    //     };
-    //     this.onRegionChange = this.onRegionChange.bind(this);
-    // }
 
     _requestPermission() {
         Permissions.request('location')
@@ -42,7 +30,6 @@ export default class GPSComponent extends Component {
                 this.setState({
                     locationPermission: response
                 })
-                console.log("Response: " + response);
             });
     }
 
