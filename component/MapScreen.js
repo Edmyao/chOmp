@@ -94,8 +94,6 @@ export default class GPSComponent extends Component {
                     style={styles.resultBlock}>
                     <View style={styles.resultTextContainer}>
                         <Text style={styles.Title}>{name}</Text>
-                        <Text style={styles.resultText}>{id}</Text>
-                        <Text style={styles.resultText}>{rating}</Text>
                         <Text style={styles.resultText}>{address}</Text>
                         <Rating
                             readonly

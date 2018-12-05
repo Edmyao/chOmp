@@ -38,13 +38,20 @@ export default class App extends React.Component {
     fetch(`https://developers.zomato.com/api/v2.1/geocode?lat=${lat}&lon=${long}&apikey=f8fd515e2cdc8ed43c71864677bc2e2c`)
     .then((response) => response.json())
     .then((response) => {
+        var ent_id = response.location.entity_id
+        fetch(`https://developers.zomato.com/api/v2.1/search?entity_id=${ent_id}&entity_type=subzone&start=0&count=20&apikey=f8fd515e2cdc8ed43c71864677bc2e2c`)
+    .then((response) => response.json())
+    .then((response) => {
         let nameArray = [];
-        for (var i = 0; i < response.nearby_restaurants.length; i++){
-            nameArray.push(response.nearby_restaurants[i]);
+        for (var i = 0; i < response.restaurants.length; i++){
+            nameArray.push(response.restaurants[i]);
         }
         this.setState({
             places: nameArray,
         })
+    })
+
+
     })
 }
 
