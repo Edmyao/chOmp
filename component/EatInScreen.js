@@ -24,7 +24,7 @@ export default class App extends React.Component {
   }
 
   fetchToDos(searchedfood) {
-    fetch(`https://api.edamam.com/search?q=${searchedfood}&app_id=bb804bda&app_key=0aa391c92f87ea1d2035fe713d9efb2d&from=0&to=9`)
+    fetch(`https://api.edamam.com/search?q=${searchedfood}&app_id=bb804bda&app_key=0aa391c92f87ea1d2035fe713d9efb2d&from=0&to=25`)
     .then((response) => response.json())
     .then((response) => {
         let recipeArray = [];
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   },
   modalView:{
     flex:1,
-    alignItems: 'center',   
+    alignItems: 'center',
     justifyContent: 'center',
     height: height,
     width: width
