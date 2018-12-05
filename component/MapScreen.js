@@ -13,15 +13,15 @@ let deviceHeight = Dimensions.get('window').height
 export default class GPSComponent extends Component {
 
     static navigationOptions = {
-        title: "Map",
+        title: "Here's where to go!",
         headerStyle: {
           backgroundColor:'#233142',
         },
         headerTitleStyle: {
           fontWeight:'bold',
-          color:'#f95959',
+          color:'#ea9085',
         },
-        headerTintColor: '#f95959'
+        headerTintColor: '#ea9085'
     }
 
     _requestPermission() {
@@ -64,7 +64,7 @@ export default class GPSComponent extends Component {
     //         (error) => alert(JSON.stringify(error))
     //     );
     // }
-    
+
     render() {
         const {navigation} = this.props;
         const lat = navigation.getParam('restLat', null);
@@ -78,7 +78,7 @@ export default class GPSComponent extends Component {
         return (
 
             <View style={styles.container}>
-                <MapView 
+                <MapView
                 initialRegion={{latitude:Number(lat),longitude:Number(long), latitudeDelta:0.001,longitudeDelta:0.001}}
                 style={styles.map}
                 >
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         height: 'auto',
         flexDirection:'row',
         borderBottomColor: '#d6d6d6',
-        borderBottomWidth: 1, 
+        borderBottomWidth: 1,
         bottom: 10,
 
         zIndex: 100,
