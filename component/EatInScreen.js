@@ -73,6 +73,14 @@ pressModal(title,ingredients,health,diet,image,url){
       });
   }
 
+  emptyListView(){
+    return(
+      <View>
+        <Image style={styles.viewImage}source={require('../assets/pots_and_pans.png')}/>
+      </View>
+    )
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -89,6 +97,7 @@ pressModal(title,ingredients,health,diet,image,url){
                <FlatList
                 data={this.state.retrievedrecipes}
                 keyExtractor={(x, i) => i.toString()}
+                ListEmptyComponent={this.emptyListView}
                 renderItem={({item}) =>
                 <TouchableOpacity onPress={() => {
                   this.changeVisibility(true);
@@ -103,6 +112,7 @@ pressModal(title,ingredients,health,diet,image,url){
                         <Text style={styles.resultText}>Calories: {item.calories.toFixed()}</Text>
                     </View>
                 </View>
+
                 </TouchableOpacity>}
                 />
           </View>
@@ -146,6 +156,7 @@ pressModal(title,ingredients,health,diet,image,url){
               </View>
             </BlurView>
           </Modal>
+
       </View>
     );
   }
@@ -266,6 +277,11 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     color:'#233142',
     marginBottom:5,
-
+  },
+  viewImage:{
+    top:50,
+    width:375,
+    height:400,
+    alignSelf:'center',
   }
 })
