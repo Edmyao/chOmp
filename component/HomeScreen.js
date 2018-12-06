@@ -41,7 +41,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e2e2e2',
+    backgroundColor: '#f4f4f4',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     fontSize:15,
   },
   img:{
-    flex:1,
+    height:350,
+    width:350
   },
 });

@@ -166,7 +166,7 @@ pressModal(title,ingredients,health,diet,image,url){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e2e2e2',
+    backgroundColor: '#f4f4f4',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
     width:width,
     height: 'auto',
     backgroundColor: 'white',
+    opacity:0.96,
     elevation: 3,
     flexDirection:'row',
     marginBottom: 7,
@@ -295,6 +296,7 @@ const styles = StyleSheet.create({
     flex:1
   },
   imgContainer:{
+    marginTop: '30%',
     alignItems:'center',
     justifyContent:'center',
     width:320, 

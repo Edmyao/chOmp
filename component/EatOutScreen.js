@@ -115,7 +115,7 @@ export default class App extends React.Component {
                     <Text style={styles.random_text}>PICK FOR ME</Text>
                 </TouchableOpacity>
                 <FlatList
-                style={{backgroundColor: '#e2e2e2'}}
+                style={{backgroundColor: 'white'}}
                 data={this.state.places}
                 scrollEnabled={true}
                 ListEmptyComponent={this.emptyListView}
@@ -158,7 +158,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#e2e2e2',
+        backgroundColor: 'white',
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
