@@ -77,7 +77,7 @@ pressModal(title,ingredients,health,diet,image,url){
     return(
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-          <Image resizeMode='contain' source={require('../assets/pots_and_pans2.png')}style={styles.img}/>
+          <Image resizeMode='contain' source={require('../assets/pots_and_pans_test.png')}style={styles.img}/>
         </View>
       </View>
     )

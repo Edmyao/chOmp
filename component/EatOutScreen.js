@@ -101,7 +101,7 @@ export default class App extends React.Component {
     return(
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-            <Image resizeMode='contain' style={styles.img}source={require('../assets/pots_and_pans_test.png')}/>
+            <Image resizeMode='contain' style={styles.img}source={require('../assets/pots_and_pans2.png')}/>
           </View>
         </View>
 
