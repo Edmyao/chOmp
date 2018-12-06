@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList, Image, ScrollView, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Button, Dimensions, TouchableOpacity, FlatList, Image, ScrollView, TouchableHighlight } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { AppRegistry, TextInput } from 'react-native';
 import { Rating } from 'react-native-elements';
 const Permissions = require('react-native-permissions').default
+
+let deviceWidth = Dimensions.get('window').width
+let deviceHeight = Dimensions.get('window').height
 
 export default class App extends React.Component {
 	constructor() {
@@ -37,23 +40,35 @@ export default class App extends React.Component {
     fetchToDos(lat,long) {
     fetch(`https://developers.zomato.com/api/v2.1/geocode?lat=${lat}&lon=${long}&apikey=f8fd515e2cdc8ed43c71864677bc2e2c`)
     .then((response) => response.json())
-    .then((response) => {
-        var ent_id = response.location.entity_id
-        fetch(`https://developers.zomato.com/api/v2.1/search?entity_id=${ent_id}&entity_type=subzone&start=0&count=20&apikey=f8fd515e2cdc8ed43c71864677bc2e2c`)
-    .then((response) => response.json())
-    .then((response) => {
-        let nameArray = [];
-        for (var i = 0; i < response.restaurants.length; i++){
-            nameArray.push(response.restaurants[i]);
-        }
-        this.setState({
-            places: nameArray,
+        .then((response) => {
+            var ent_id = response.location.entity_id
+            fetch(`https://developers.zomato.com/api/v2.1/search?entity_id=${ent_id}&entity_type=subzone&start=0&count=20&apikey=f8fd515e2cdc8ed43c71864677bc2e2c`)
+            .then((response) => response.json())
+            .then((response) => {
+                let nameArray = [];
+                for (var i = 0; i < response.restaurants.length; i++){
+                    nameArray.push(response.restaurants[i]);
+                }
+                this.setState({
+                    places: nameArray,
+                })
+            })
         })
-    })
+    }
 
-
-    })
-}
+    pickRandomResto() {
+        var randint = Math.floor((Math.random()*this.state.places.length)+1)
+        this.props.navigation.navigate('Map', {
+            restId:this.state.places[randint].restaurant.R.res_id,
+            restLat:this.state.places[randint].restaurant.location.latitude,
+            restLong:this.state.places[randint].restaurant.location.longitude,
+            restname:this.state.places[randint].restaurant.name,
+            restaddress:this.state.places[randint].restaurant.location.address,
+            restrating:this.state.places[randint].restaurant.user_rating.aggregate_rating,
+            restcuisine:this.state.places[randint].restaurant.cuisines,
+            restimage:this.state.places[randint].restaurant.thumb,
+        })
+    }
 
     componentDidMount(){
         this._requestPermission();
@@ -85,7 +100,11 @@ export default class App extends React.Component {
 	render() {
 	    return (
 	      <View style={styles.container}>
+                <TouchableOpacity onPress={() => {this.pickRandomResto()}} style={styles.random_but}>
+                    <Text style={styles.random_text}>PICK FOR ME</Text>
+                </TouchableOpacity>
                 <FlatList
+                style={{backgroundColor: '#e2e2e2'}}
                 data={this.state.places}
                 scrollEnabled={true}
                 keyExtractor={(x, i) => i.toString()}
@@ -131,7 +150,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     resultBlock: {
-        marginTop: 7,
+        marginBottom: 7,
         width:'100%',
         height: 'auto',
         backgroundColor: 'white',
@@ -142,7 +161,6 @@ const styles = StyleSheet.create({
     resultImage: {
         width:'35%',
         height: '100%',
-        backgroundColor: '#fa2',
     },
     resultTextContainer: {
         width: '62%',
@@ -158,5 +176,21 @@ const styles = StyleSheet.create({
         fontSize: 13,
         padding: 3,
         marginRight: 15
+    },
+    random_but: {
+        height: 'auto',
+        width: deviceWidth - 10,
+        padding:10,
+        borderRadius: 8,
+        backgroundColor:'#ea9085',
+        margin: 7,
+        justifyContent:'center',
+        alignItems: 'center',
+        elevation: 3,
+
+    },
+    random_text: {
+        color: '#900d0d',
+        fontSize: 17,
     }
 });

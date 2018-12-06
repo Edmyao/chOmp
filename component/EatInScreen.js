@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   resultBlock: {
     width:width,
     height: 'auto',
+    padding:10,
     backgroundColor: '#ea9085',
     elevation: 3,
     flexDirection:'row',
