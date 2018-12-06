@@ -75,8 +75,10 @@ pressModal(title,ingredients,health,diet,image,url){
 
   emptyListView(){
     return(
-      <View>
-        <Image style={styles.viewImage}source={require('../assets/pots_and_pans.png')}/>
+      <View style={styles.container}>
+        <View style={styles.imgContainer}>
+          <Image resizeMode='contain' source={require('../assets/pots_and_pans2.png')}style={styles.img}/>
+        </View>
       </View>
     )
   }
@@ -91,10 +93,9 @@ pressModal(title,ingredients,health,diet,image,url){
             style={styles.search}
             value={this.state.text}/>
         </View>
-
-
-          <View style={styles.resultDiv}>
                <FlatList
+                style={{marginTop:40}}
+                scrollEnabled={true}
                 data={this.state.retrievedrecipes}
                 keyExtractor={(x, i) => i.toString()}
                 ListEmptyComponent={this.emptyListView}
@@ -115,7 +116,6 @@ pressModal(title,ingredients,health,diet,image,url){
 
                 </TouchableOpacity>}
                 />
-          </View>
 
           <Modal visible={this.state.showModal} animationType="slide" transparent={true}
               onRequestClose={ () => {
@@ -123,7 +123,8 @@ pressModal(title,ingredients,health,diet,image,url){
                 this.changeVisibility(false)
                 }}>
 
-            <BlurView tint="dark" intensity={40} style={StyleSheet.absoluteFill}>
+
+            <BlurView tint="dark" intensity={90} style={StyleSheet.absoluteFill}>
               <View style={styles.modalView}>
                 <View style={styles.innerContainer}>
                   <Text style={styles.modalTitle}> {this.state.modalTitle.toUpperCase()}</Text>
@@ -133,11 +134,11 @@ pressModal(title,ingredients,health,diet,image,url){
 
                   <ScrollView>
                     <Text style={styles.modalLabels}>YOU WILL NEED: </Text>
-                      <Text style={styles.resultText}>{this.state.modalIngredients.length ? this.state.modalIngredients.join("\n ") : ''}</Text>
+                      <Text style={styles.ModalresultText}>- {this.state.modalIngredients.length ? this.state.modalIngredients.join("\n- ") : ''}</Text>
                     <Text style={styles.modalLabels}>HEALTH: </Text>
-                      <Text style={styles.resultText}>{this.state.modalHealth.length ? this.state.modalHealth.join(", ") : ' - '} </Text>
+                      <Text style={styles.ModalresultText}>{this.state.modalHealth.length ? this.state.modalHealth.join(", ") : ' - '} </Text>
                     <Text style={styles.modalLabels}>DIET: </Text>
-                      <Text style={styles.resultText}>{this.state.modalDiet.length ? this.state.modalDiet.join(", ") : ' - '} </Text>
+                      <Text style={styles.ModalresultText}>{this.state.modalDiet.length ? this.state.modalDiet.join(", ") : ' - '} </Text>
                     <Text style={styles.modalLabels}>FIND RECIPE HERE: </Text>
                       <TouchableOpacity>
                         <Text style={styles.urlText} onPress={() => Linking.openURL(this.state.modalUrl)}>{this.state.modalUrl}</Text>
@@ -165,34 +166,37 @@ pressModal(title,ingredients,health,diet,image,url){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fef4e8',
+    backgroundColor: '#e2e2e2',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   image:{
     height:100,
     width:100,
   },
   inputContainer:{
-    margin:5,
+    margin:7,
     flex:1,
     flexDirection:'row',
-    width:'90%'
+    width:width,
+    height:40,
+    justifyContent: 'center'
   },
   resultDiv:{
-    height:'90%',
-    width:width,
-    bottom:0,
     position:'absolute',
+    top: 54,
+    height: '95%',
+    width:width,
   },
   search: {
     height: 40,
-    width:'100%',
-    borderColor:'#681a1e',
+    width: width - 10,
+    borderColor:'#ea9085',
     borderWidth: 2,
     borderRadius:8,
     padding:10,
-    color:'#f95959',
+    marginBottom:10, 
+    backgroundColor:'white',
   },
   buttText:{
     alignSelf:'center',
@@ -205,42 +209,50 @@ const styles = StyleSheet.create({
   resultBlock: {
     width:width,
     height: 'auto',
-    padding:10,
-    backgroundColor: '#ea9085',
+    backgroundColor: 'white',
     elevation: 3,
     flexDirection:'row',
-    marginBottom: 10,
-    left:0,
+    marginBottom: 7,
   },
   resultImage: {
     width:'35%',
-    height:'auto',
-    marginRight: 5,
+    height: '100%',
   },
   resultTextContainer: {
     width: '60%',
+    padding: 10,
   },
   Title:{
-    color: 'white',
-    fontSize: 18,
+    color: 'black',
+    fontSize: 22,
     fontWeight: 'bold'
   },
   resultText : {
-    color: '#681a1e',
+    color: 'black',
+    fontSize: 13,
+    padding: 3,
+    marginRight: 15
+  },
+  ModalresultText : {
+    color: 'white',
     fontSize: 15,
-    marginLeft:5,
+    padding: 5,
+    marginLeft: 5,
+    lineHeight: 25,
   },
   modalView:{
-    flex:1,
     alignItems: 'center',
     justifyContent: 'center',
     height: height,
     width: width
   },
   innerContainer: {
-    backgroundColor:'#fef4e8',
-    height:'75%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'#233142',
+    height:'82%',
     width:'95%',
+    padding: 10,
     borderRadius:5,
   },
   closeButt:{
@@ -250,38 +262,42 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
-    backgroundColor:'#fff',
-    color:'#681a1e'
+    backgroundColor:'#ea9085',
+    color:'#900d0d'
   },
   modalTitle:{
     alignSelf:'center',
     fontSize: 22,
     fontWeight:'bold',
-    color:'#681a1e',
+    color:'#ea9085',
   },
   modalLabels:{
-    color: '#681a1e',
+    color: '#ea9085',
     fontSize: 15,
-    marginLeft:5,
     fontWeight:'bold',
   },
   modalImg: {
-    height:250,
-    width:250,
+    height:200,
+    width:200,
     borderRadius:5,
     alignSelf:'center',
     margin:10,
   },
   urlText: {
     textDecorationLine:'underline',
-    alignSelf:'center',
-    color:'#233142',
+    color:'white',
     marginBottom:5,
+    marginLeft: 5,
+    lineHeight: 20,
+
   },
-  viewImage:{
-    top:50,
-    width:375,
-    height:400,
-    alignSelf:'center',
-  }
+  img:{
+    flex:1
+  },
+  imgContainer:{
+    alignItems:'center',
+    justifyContent:'center',
+    width:320, 
+    height:320,
+  },
 })

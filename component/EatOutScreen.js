@@ -99,9 +99,12 @@ export default class App extends React.Component {
 
     emptyListView(){
     return(
-          <View>
-            <Image style={styles.viewImage}source={require('../assets/pots_and_pans.png')}/>
+      <View style={styles.container}>
+        <View style={styles.imgContainer}>
+            <Image resizeMode='contain' style={styles.img}source={require('../assets/pots_and_pans_test.png')}/>
           </View>
+        </View>
+
         )
     }
 
@@ -118,6 +121,7 @@ export default class App extends React.Component {
                 ListEmptyComponent={this.emptyListView}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
+
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
                     restId:item.restaurant.R.res_id,
                     restLat:item.restaurant.location.latitude,
@@ -155,9 +159,9 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#e2e2e2',
-        height: '100%',
+        flex:1,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
     },
     resultBlock: {
         marginBottom: 7,
@@ -203,10 +207,14 @@ const styles = StyleSheet.create({
         color: '#900d0d',
         fontSize: 17,
     },
-    viewImage:{
-        top:50,
-        width:375,
-        height:400,
-        alignSelf:'center',
-      }
+  img:{
+    flex:1
+  },
+  imgContainer:{
+    marginTop: '30%',
+    alignItems:'center',
+    justifyContent:'center',
+    width:320, 
+    height:320,
+  },
 });

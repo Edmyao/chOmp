@@ -7,20 +7,19 @@ export default class App extends React.Component {
 
   static navigationOptions = {
     title: "c h o m p !",
-    headerStyle: {
-      backgroundColor:'#BB736A',
-    },
-    headerTitleStyle: {
-      fontWeight:'bold',
-      color:'#681a1e'
-      // color:'#233142'
-    },
+      headerStyle: {
+        backgroundColor:'#233142',
+      },
+      headerTitleStyle: {
+        fontWeight:'bold',
+        color:'#ea9085',
+      },
   }
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-          <Image source={require('../assets/pots_and_pans_home.png')}style={styles.img}/>
+          <Image resizeMode='contain' source={require('../assets/pots_and_pans_home.png')}style={styles.img}/>
         </View>
 
         <View style={styles.buttContainer}>
@@ -42,30 +41,29 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fef4e8',
+    backgroundColor: '#e2e2e2',
     alignItems: 'center',
     justifyContent: 'center',
   },
   imgContainer:{
-    width:250,
-    height:70,
-    flex:1,
     alignItems:'center',
     justifyContent:'center',
+    width:320, 
+    height:320,
   },
   buttContainer:{
     width:300,
     height:70,
-    flex:1,
     alignItems:'center',
     justifyContent:'center',
     flexDirection:'row',
   },
   buttons: {
-    bottom:90,
     margin:10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     backgroundColor: '#ea9085',
-    height:'15%',
+    height:'auto',
     width:'45%',
     justifyContent: 'center',
     borderRadius:8,
@@ -77,9 +75,6 @@ const styles = StyleSheet.create({
     fontSize:15,
   },
   img:{
-    width:320, 
-    height:320,
-    top:60,
-
+    flex:1,
   },
 });
