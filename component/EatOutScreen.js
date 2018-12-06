@@ -82,12 +82,21 @@ export default class App extends React.Component {
 		this.setState({word})
 	}
 
+    emptyListView(){
+    return(
+          <View>
+            <Image style={styles.viewImage}source={require('../assets/pots_and_pans.png')}/>
+          </View>
+        )
+    }
+
 	render() {
 	    return (
 	      <View style={styles.container}>
                 <FlatList
                 data={this.state.places}
                 scrollEnabled={true}
+                ListEmptyComponent={this.emptyListView}
                 keyExtractor={(x, i) => i.toString()}
                 renderItem={({item}) =>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
@@ -158,5 +167,11 @@ const styles = StyleSheet.create({
         fontSize: 13,
         padding: 3,
         marginRight: 15
-    }
+    },
+    viewImage:{
+        top:50,
+        width:375,
+        height:400,
+        alignSelf:'center',
+      }
 });

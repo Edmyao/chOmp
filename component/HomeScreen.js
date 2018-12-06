@@ -20,7 +20,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-          <Image source={require('../assets/logo.png')}style={styles.img}/>
+          <Image source={require('../assets/pots_and_pans_home.png')}style={styles.img}/>
         </View>
 
         <View style={styles.buttContainer}>
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     fontSize:15,
   },
   img:{
-    height:155,
-    width:120,
+    width:320, 
+    height:320,
     top:60,
 
   },
