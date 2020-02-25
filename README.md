@@ -1,5 +1,5 @@
 # chOmp
 
-![Alt Text](https://gfycat.com/quaintblushingerin)
+![](http://i.imgur.com/OUkLi.gif)
 
 
