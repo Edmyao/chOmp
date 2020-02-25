@@ -1,5 +1,7 @@
 # chOmp
 
-![](http://i.imgur.com/OUkLi.gif)
+![](feature1.gif)
 
+
+![](feature2.gif)
 
