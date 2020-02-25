@@ -1,7 +1,7 @@
 # chOmp
 
-![](feature1.gif)
+![](assets/findfood.gif)
 
 
-![](feature2.gif)
+![](assets/letscook.gif)
 
